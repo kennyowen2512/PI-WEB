@@ -1,0 +1,52 @@
+{# templates/annonce/new.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une nouvelle annonce{% endblock %}
+
+{% block body %}
+    <h1>Créer une nouvelle annonce</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.nomanimal, {
+            'label': "Nom de l'animal",
+            'attr': {'class': 'form-control'}
+        }) }}
+
+        {{ form_row(form.espece, {
+            'label': "Espèce",
+            'attr': {'class': 'form-control'}
+        }) }}
+
+        {{ form_row(form.genre, {
+            'label': "Genre",
+            'attr': {'class': 'form-control'}
+        }) }}
+
+        <div class="form-group">
+            <label for="annonce_photo">Photo de l'animal</label>
+            <div class="custom-file">
+                {{ form_widget(form.photo, {
+                    'attr': {
+                        'class': 'custom-file-input',
+                        'id': 'annonce_photo'
+                    }
+                }) }}
+                <label class="custom-file-label" for="annonce_photo">Choisir un fichier</label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Créer l'annonce</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('front_annonce_index') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
+
+    <script>
+        // Script pour afficher le nom du fichier sélectionné
+        document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+            var fileName = document.getElementById("annonce_photo").files[0].name;
+            var nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
+    </script>
+{% endblock %}

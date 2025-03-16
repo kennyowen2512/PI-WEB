@@ -1,5 +1,57 @@
+# config/routes.yaml
+
 controllers:
     resource:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+# Back office
+admin_dashboard:
+    path: /admin
+    controller: App\Controller\AdminController::dashboard
+
+# Gestion des utilisateurs (Back office)
+app_user_index:
+    path: /admin/users
+    controller: App\Controller\UserController::index
+app_user_edit:
+    path: /admin/users/{id}/edit
+    controller: App\Controller\UserController::edit
+app_user_delete:
+    path: /admin/users/{id}/delete
+    controller: App\Controller\UserController::delete
+    methods: [DELETE]
+
+# Gestion des annonces (Back office)
+admin_annonce_index:
+    path: /admin/annonces
+    controller: App\Controller\AnnonceController::index
+admin_annonce_edit:
+    path: /admin/annonces/{id}/edit
+    controller: App\Controller\AnnonceController::edit
+    methods: [GET, POST]
+admin_annonce_delete:
+    path: /admin/annonces/{id}/delete
+    controller: App\Controller\AnnonceController::delete
+    methods: [POST]
+
+# Front office
+front_annonce_index:
+    path: /annonces
+    controller: App\Controller\AnnonceController::index  # Utilise le même contrôleur, mais avec une logique différente
+front_annonce_show:
+    path: /annonces/{id}
+    controller: App\Controller\AnnonceController::show
+front_annonce_newp:
+    path: /annonces/new
+    controller: App\Controller\AnnonceController::new
+    methods: [GET, POST]
+front_annonce_edit:
+    path: /annonces/{id}/edit
+    controller: App\Controller\AnnonceController::edit
+    methods: [GET, POST]
+front_annonce_delete:
+    path: /annonces/{id}/delete
+    controller: App\Controller\AnnonceController::delete
+    methods: [POST]

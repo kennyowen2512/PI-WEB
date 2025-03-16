@@ -1,0 +1,13 @@
+{# templates/back_office/dashboard.html.twig #}
+
+{% extends 'back_office/base.html.twig' %}
+
+{% block title %}Dashboard - Back Office{% endblock %}
+
+{% block body %}
+    <h1>Bienvenue dans le back office</h1>
+    <div class="links">
+        <a href="{{ path('app_user_index') }}" class="btn btn-primary">Liste des utilisateurs</a>
+        <a href="{{ path('admin_annonce_index') }}" class="btn btn-primary">Liste des annonces</a>
+    </div>
+{% endblock %}

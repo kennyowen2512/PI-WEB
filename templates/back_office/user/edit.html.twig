@@ -1,0 +1,24 @@
+{% extends 'back_office/base.html.twig' %}
+
+{% block title %}Modifier l'utilisateur - {{ user.nom }}{% endblock %}
+
+{% block body %}
+    <h1>Modifier l'utilisateur</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.nom, {
+            'label': 'Nom'
+        }) }}
+        {{ form_row(form.numero, {
+            'label': 'Numéro de téléphone'
+        }) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword, {
+            'label': 'Nouveau mot de passe (laisser vide pour ne pas changer)'
+        }) }}
+
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_user_index') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
+{% endblock %}

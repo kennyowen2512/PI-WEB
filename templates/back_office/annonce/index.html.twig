@@ -1,0 +1,54 @@
+{# templates/back_office/annonce/index.html.twig #}
+
+{% extends 'back_office/base.html.twig' %}
+
+{% block title %}Liste des annonces - Back Office{% endblock %}
+
+{% block body %}
+    <h1>Liste des annonces</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom de l'animal</th>
+                <th>Espèce</th>
+                <th>Genre</th>
+                <th>Photo</th>
+                <th>Nom propriétaire</th>
+                <th>Numéro propriétaire</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for annonce in annonces %}
+                <tr>
+                    <td>{{ annonce.nomanimal }}</td>
+                    <td>{{ annonce.espece }}</td>
+                    <td>{{ annonce.genre }}</td>
+                    <td>
+                        {% if annonce.photo %}
+                            <img src="{{ asset('animals/' ~ annonce.photo) }}" alt="Photo de {{ annonce.nomanimal }}" width="100">
+                        {% else %}
+                            <p>Aucune photo disponible.</p>
+                        {% endif %}
+                    </td>
+                    <td>{{ annonce.proprietaire }}</td>
+                    <td>{{ annonce.numProprietaire }}</td>
+                    <td>
+                        <a href="{{ path('annonce_edit', {'id': annonce.id}) }}" class="btn btn-warning">Modifier</a>
+                        <form action="{{ path('annonce_delete', {'id': annonce.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?');" style="display: inline;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ annonce.id) }}">
+                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Aucune annonce trouvée.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_annonce_index') }}" class="btn btn-success">Créer une nouvelle annonce</a>
+{% endblock %}

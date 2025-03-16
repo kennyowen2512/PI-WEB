@@ -1,0 +1,55 @@
+{# templates/front_office/annonce/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des annonces{% endblock %}
+
+{% block body %}
+    <h1>Liste des annonces</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom de l'animal</th>
+                <th>Espèce</th>
+                <th>Genre</th>
+                <th>Photo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for annonce in annonces %}
+                <tr>
+                    <td>{{ annonce.nomanimal }}</td>
+                    <td>{{ annonce.espece }}</td>
+                    <td>{{ annonce.genre }}</td>
+                    <td>
+                        {% if annonce.photo %}
+                            <img src="{{ asset('animals/' ~ annonce.photo) }}" alt="Photo de {{ annonce.nomanimal }}" width="100">
+                        {% else %}
+                            <p>Aucune photo disponible.</p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('front_annonce_show', {'id': annonce.id}) }}">Voir</a>
+                        {% if app.user and app.user.id == annonce.proprietaire.id %}
+                            <a href="{{ path('annonce_edit', {'id': annonce.id}) }}" class="btn btn-warning">Modifier</a>
+                            <form action="{{ path('annonce_delete', {'id': annonce.id}) }}" method="post" style="display:inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ annonce.id) }}">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?')">Supprimer</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucune annonce trouvée.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if app.user %}
+        <a href="{{ path('front_annonce_new') }}" class="btn btn-success">Créer une nouvelle annonce</a>
+    {% endif %}
+{% endblock %}
